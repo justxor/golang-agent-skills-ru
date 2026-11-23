@@ -1,4 +1,4 @@
-# Golang Agent Skills RU — Go для AI-агентов и разработчиков
+# Golang Agent Skills RU - Go для AI-агентов и разработчиков
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) [![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](https://go.dev/) [![Telegram](https://img.shields.io/badge/Telegram-Golang__google-blue)](https://t.me/Golang_google)
 
@@ -29,6 +29,24 @@ cd golang-agent-skills-ru
 | Другие клиенты | Прочитайте SKILL.md вручную или подключите через их механизм Agent Skills |
 
 Перед подключением прочитайте инструкции навыка. Не предоставляйте агенту доступ к production-данным и секретам.
+
+## Подключаемые навыки (SKILL.md)
+
+| Навык | Назначение |
+|---|---|
+| [go-production](skills/go-production/SKILL.md) | Разработка и ревью Go-сервисов: архитектура, ошибки, конфигурация, контекст, жизненный цикл, качество кода. |
+| [go-concurrency](skills/go-concurrency/SKILL.md) | Goroutines, каналы, mutex, context, отмена и ограниченный worker pool в Go. |
+| [go-testing](skills/go-testing/SKILL.md) | Тестирование Go: table-driven tests, httptest, интеграционные тесты, покрытие и regression tests. |
+| [go-performance](skills/go-performance/SKILL.md) | Измерение производительности Go: benchmark, pprof, аллокации, память и CPU. |
+| [go-http-api](skills/go-http-api/SKILL.md) | Разработка REST API на Go с net/http, JSON, таймаутами, graceful shutdown и тестами. |
+| [go-postgres](skills/go-postgres/SKILL.md) | Go и PostgreSQL: database/sql, pgx, транзакции, пул соединений, миграции. |
+
+Например, для Codex из корня проекта:
+
+```bash
+mkdir -p .agents/skills
+cp -R /путь/к/golang-agent-skills-ru/skills/go-production .agents/skills/
+```
 
 ## Каталог: шпаргалка Go-разработчика
 
@@ -97,7 +115,7 @@ case jobs <- job:
 
 ## 5. PostgreSQL и database/sql
 
-sql.DB — пул соединений. Создавайте его один раз на приложение, настраивайте лимиты с учетом количества реплик и бюджета базы. Используйте QueryContext/ExecContext и параметры запросов; проверяйте rows.Err после обхода. Транзакции должны быть короткими, rollback должен выполняться при преждевременном выходе, а ошибка Commit — проверяться.
+sql.DB - пул соединений. Создавайте его один раз на приложение, настраивайте лимиты с учетом количества реплик и бюджета базы. Используйте QueryContext/ExecContext и параметры запросов; проверяйте rows.Err после обхода. Транзакции должны быть короткими, rollback должен выполняться при преждевременном выходе, а ошибка Commit - проверяться.
 
 Не запускайте внешние сетевые операции внутри длительной транзакции. Для надежной доставки событий после записи изучите transactional outbox.
 
@@ -110,13 +128,13 @@ go test -coverprofile=coverage.out ./...
 go tool cover -func=coverage.out
 ```
 
-Table-driven tests подходят для граничных значений. httptest — для HTTP-контрактов. Интеграционные тесты нужны там, где поведение зависит от реальной БД. Не проверяйте внутреннюю реализацию вместо наблюдаемого результата.
+Table-driven tests подходят для граничных значений. httptest - для HTTP-контрактов. Интеграционные тесты нужны там, где поведение зависит от реальной БД. Не проверяйте внутреннюю реализацию вместо наблюдаемого результата.
 
 ## 7. Производительность и профилирование
 
 ```bash
 go test -bench=. -benchmem ./...
-go test -run='^$' -bench=. -cpuprofile=cpu.out ./...
+go test -run='^
 go tool pprof cpu.out
 ```
 
@@ -154,7 +172,50 @@ go tool pprof cpu.out
 - [Go Memory Model](https://go.dev/ref/mem)
 - [Go Diagnostics](https://go.dev/doc/diagnostics)
 - [Agent Skills](https://agentskills.io/)
-- [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) — источник вдохновения, отдельный проект Samuel Berthe под MIT.
+- [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) - источник вдохновения, отдельный проект Samuel Berthe под MIT.
+
+## Лицензия
+
+MIT. Предложения, исправления и примеры приветствуются. Не переносите неподтвержденные результаты бенчмарков или оценок AI в документацию.
+ -bench=. -cpuprofile=cpu.out ./internal/example
+go tool pprof cpu.out
+```
+
+Для профиля укажите конкретный пакет. Сравнивайте несколько прогонов в одинаковых условиях. Сначала найдите горячий участок, затем меняйте алгоритм или аллокации. Не внедряйте sync.Pool без измерений.
+
+## 8. Observability и надежность
+
+Используйте структурированные логи slog, корреляцию запроса через request ID, метрики latency, traffic, errors и saturation. Не записывайте персональные данные и токены в логи. Ограничивайте число уникальных значений labels. Повторяйте только временные ошибки и только безопасные для повторения операции; учитывайте общий deadline и backoff.
+
+## 9. Чек-лист перед pull request
+
+- [ ] gofmt, go vet и тесты проходят.
+- [ ] Нет изменений публичного API без описания миграции.
+- [ ] Ошибки не теряются, ресурсы освобождаются.
+- [ ] Есть остановка фоновых задач.
+- [ ] Изменения схемы БД совместимы с развертыванием.
+- [ ] Нет секретов, лишних зависимостей и незапланированных сетевых запросов.
+- [ ] Производительность подтверждена измерениями, если она была целью.
+
+## 10. Готовые задания для AI-агента
+
+| Задача | Промпт |
+|---|---|
+| Рефакторинг | Изучи код, предложи минимальные изменения, сохрани контракт, добавь тесты |
+| Code review | Найди ошибки обработки context и жизненного цикла goroutines в моем diff; объясни и предложи исправления |
+| API | Реализуй обработчик net/http, валидацию, тесты httptest и graceful shutdown |
+| Оптимизация | Запиши benchmark до изменений, выяви аллокации, сравни измерения |
+| Работа с БД | Проверь транзакционные границы, ошибки Commit, лимиты пула и context |
+
+## Документация и полезные источники
+
+- [Effective Go](https://go.dev/doc/effective_go)
+- [Go Blog](https://go.dev/blog/)
+- [Стандартная библиотека](https://pkg.go.dev/std)
+- [Go Memory Model](https://go.dev/ref/mem)
+- [Go Diagnostics](https://go.dev/doc/diagnostics)
+- [Agent Skills](https://agentskills.io/)
+- [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) - источник вдохновения, отдельный проект Samuel Berthe под MIT.
 
 ## Лицензия
 
