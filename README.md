@@ -4,7 +4,7 @@
 
 Практическая база знаний по Golang на русском языке: переиспользуемые Agent Skills для Claude Code, Codex, Cursor и других AI coding assistants. Для разработчиков Go, backend-инженеров, тимлидов и тех, кто хочет писать надежные сервисы для production.
 
-📚 [Go-сообщество в Telegram](https://t.me/Golang_google) · [Статьи и курсы](https://uproger.com/)
+📚 [Go в Telegram все уроки, новости и экспертные примеры с кодом](https://t.me/Golang_google) · [Статьи и курсы]([https://uproger.com/](https://t.me/addlist/MUtJEeJSxeY2YTFi))
 
 ## Зачем нужны Agent Skills
 
