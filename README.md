@@ -4,7 +4,9 @@
 
 Практическая база знаний по Golang на русском языке: переиспользуемые Agent Skills для Claude Code, Codex, Cursor и других AI coding assistants. Для разработчиков Go, backend-инженеров, тимлидов и тех, кто хочет писать надежные сервисы для production.
 
-📚 [Go в Telegram все уроки, новости и экспертные примеры с кодом](https://t.me/Golang_google) · [Статьи и курсы]([https://uproger.com/](https://t.me/addlist/MUtJEeJSxeY2YTFi))
+📚 [Go в Telegram все уроки, новости и экспертные примеры с кодом](https://t.me/Golang_google) · [Статьи и курсы](https://uproger.com/) · [Папка Telegram-каналов](https://t.me/addlist/MUtJEeJSxeY2YTFi)
+
+> 🧭 **[Полезные ресурсы для Go-разработчиков](resources/README.md)**: библиотеки, официальная документация, roadmap Junior → Senior, команды Go, задания для портфолио и вопросы для собеседований.
 
 ## Зачем нужны Agent Skills
 
@@ -134,50 +136,7 @@ Table-driven tests подходят для граничных значений. 
 
 ```bash
 go test -bench=. -benchmem ./...
-go test -run='^
-go tool pprof cpu.out
-```
-
-Для профиля укажите конкретный пакет. Сравнивайте несколько прогонов в одинаковых условиях. Сначала найдите горячий участок, затем меняйте алгоритм или аллокации. Не внедряйте sync.Pool без измерений.
-
-## 8. Observability и надежность
-
-Используйте структурированные логи slog, корреляцию запроса через request ID, метрики latency, traffic, errors и saturation. Не записывайте персональные данные и токены в логи. Ограничивайте число уникальных значений labels. Повторяйте только временные ошибки и только безопасные для повторения операции; учитывайте общий deadline и backoff.
-
-## 9. Чек-лист перед pull request
-
-- [ ] gofmt, go vet и тесты проходят.
-- [ ] Нет изменений публичного API без описания миграции.
-- [ ] Ошибки не теряются, ресурсы освобождаются.
-- [ ] Есть остановка фоновых задач.
-- [ ] Изменения схемы БД совместимы с развертыванием.
-- [ ] Нет секретов, лишних зависимостей и незапланированных сетевых запросов.
-- [ ] Производительность подтверждена измерениями, если она была целью.
-
-## 10. Готовые задания для AI-агента
-
-| Задача | Промпт |
-|---|---|
-| Рефакторинг | Изучи код, предложи минимальные изменения, сохрани контракт, добавь тесты |
-| Code review | Найди ошибки обработки context и жизненного цикла goroutines в моем diff; объясни и предложи исправления |
-| API | Реализуй обработчик net/http, валидацию, тесты httptest и graceful shutdown |
-| Оптимизация | Запиши benchmark до изменений, выяви аллокации, сравни измерения |
-| Работа с БД | Проверь транзакционные границы, ошибки Commit, лимиты пула и context |
-
-## Документация и полезные источники
-
-- [Effective Go](https://go.dev/doc/effective_go)
-- [Go Blog](https://go.dev/blog/)
-- [Стандартная библиотека](https://pkg.go.dev/std)
-- [Go Memory Model](https://go.dev/ref/mem)
-- [Go Diagnostics](https://go.dev/doc/diagnostics)
-- [Agent Skills](https://agentskills.io/)
-- [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) - источник вдохновения, отдельный проект Samuel Berthe под MIT.
-
-## Лицензия
-
-MIT. Предложения, исправления и примеры приветствуются. Не переносите неподтвержденные результаты бенчмарков или оценок AI в документацию.
- -bench=. -cpuprofile=cpu.out ./internal/example
+go test -run='^$' -bench=. -cpuprofile=cpu.out ./internal/example
 go tool pprof cpu.out
 ```
 
