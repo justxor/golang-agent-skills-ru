@@ -1,5 +1,7 @@
 # Golang Agent Skills RU - Go для AI-агентов и разработчиков
 
+![Golang Agent Skills — навыки ИИ-агентов для Go-разработки](IMAGE%202026-11-24%2021%3A10%3A32.jpg)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) [![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](https://go.dev/) [![Telegram](https://img.shields.io/badge/Telegram-Golang__google-blue)](https://t.me/Golang_google)
 
 Практическая база знаний по Golang на русском языке: переиспользуемые Agent Skills для Claude Code, Codex, Cursor и других AI coding assistants. Для разработчиков Go, backend-инженеров, тимлидов и тех, кто хочет писать надежные сервисы для production.
